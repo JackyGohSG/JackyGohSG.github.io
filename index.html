@@ -1,198 +1,351 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Jacky Goh — Founder-Operator for AI Product & Technical Systems</title>
-  <meta name="description" content="Jacky Goh is a Singapore-based founder-operator focused on AI product, technical product, founder's office, and agentic automation roles.">
-  <meta property="og:title" content="Jacky Goh — Founder-Operator for AI Product & Technical Systems">
-  <meta property="og:description" content="Founder & CEO of Rewards Bunny. Product, technical systems, rewards, commerce, AI workflows, and zero-to-one execution.">
-  <meta property="og:type" content="website">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Jacky Goh — Founder Operator</title>
+  <meta name="description" content="Jacky Goh is a Singapore founder-operator for AI Product, Technical Product, Founder’s Office, and AI Solutions roles." />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700;800&family=Newsreader:opsz,wght@6..72,500..700&display=swap" rel="stylesheet">
   <style>
     :root {
-      --bg: #f7f4ef;
-      --ink: #181715;
-      --muted: #69645c;
-      --line: #d9d0c4;
-      --card: #fffdf8;
-      --accent: #7a4c2a;
-      --accent-2: #1f4d46;
-      --soft: #eee7dc;
-      --shadow: 0 18px 60px rgba(36, 29, 20, .08);
+      --bg: #f7f4ee;
+      --paper: #fffdf8;
+      --ink: #191715;
+      --muted: #68625a;
+      --line: #ded6cb;
+      --line-soft: #ebe4da;
+      --green: #1f5a4f;
+      --clay: #9a5c34;
+      --blue: #264f82;
+      --yellow-bg: #f5ead0;
+      --green-bg: #e8f0e7;
+      --blue-bg: #e6edf4;
+      --red-bg: #f3e5df;
+      --ease: cubic-bezier(.16,1,.3,1);
+      --max: 1120px;
     }
     * { box-sizing: border-box; }
-    html { scroll-behavior: smooth; }
+    html { scroll-behavior: smooth; background: var(--bg); }
     body {
       margin: 0;
-      background: var(--bg);
+      background:
+        radial-gradient(circle at 90% 3%, rgba(31,90,79,.08), transparent 30rem),
+        radial-gradient(circle at 10% 16%, rgba(154,92,52,.07), transparent 24rem),
+        var(--bg);
       color: var(--ink);
-      font-family: ui-serif, Georgia, Cambria, "Times New Roman", serif;
-      line-height: 1.55;
+      font-family: "Geist", ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+      line-height: 1.6;
     }
-    a { color: inherit; }
-    .wrap { width: min(1120px, calc(100% - 40px)); margin: 0 auto; }
-    header {
+    a { color: inherit; text-underline-offset: 3px; }
+    .wrap { width: min(var(--max), calc(100% - 40px)); margin: 0 auto; }
+
+    header { padding: 26px 0 12px; }
+    .nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+      padding-bottom: 22px;
       border-bottom: 1px solid var(--line);
-      background: rgba(247,244,239,.92);
-      backdrop-filter: blur(12px);
-      position: sticky; top: 0; z-index: 10;
     }
-    .nav { display: flex; align-items: center; justify-content: space-between; min-height: 72px; gap: 24px; }
-    .brand { font-size: 18px; font-weight: 700; letter-spacing: .02em; text-decoration: none; }
-    nav { display: flex; gap: 18px; flex-wrap: wrap; justify-content: flex-end; font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; font-size: 14px; color: var(--muted); }
-    nav a { text-decoration: none; }
-    nav a:hover { color: var(--ink); }
-    .hero { padding: 90px 0 64px; }
-    .eyebrow { font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; text-transform: uppercase; letter-spacing: .12em; font-size: 12px; color: var(--accent); font-weight: 700; }
-    h1 { font-size: clamp(42px, 7vw, 86px); line-height: .96; letter-spacing: -.055em; margin: 18px 0 26px; max-width: 980px; }
-    .lead { font-size: clamp(20px, 2vw, 28px); line-height: 1.35; max-width: 840px; color: #35312b; margin: 0; }
-    .actions { display: flex; flex-wrap: wrap; gap: 14px; margin-top: 34px; font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
-    .btn { display: inline-flex; align-items: center; justify-content: center; min-height: 44px; padding: 0 18px; border-radius: 999px; border: 1px solid var(--ink); text-decoration: none; font-weight: 700; font-size: 14px; }
-    .btn.primary { background: var(--ink); color: var(--bg); }
-    .btn:hover { transform: translateY(-1px); }
-    .stats { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 1px; background: var(--line); border: 1px solid var(--line); margin-top: 58px; }
-    .stat { background: var(--card); padding: 24px; min-height: 132px; }
-    .stat strong { display: block; font-size: clamp(26px, 4vw, 44px); line-height: 1; letter-spacing: -.04em; margin-bottom: 10px; color: var(--accent-2); }
-    .stat span { font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; color: var(--muted); font-size: 14px; }
-    section { padding: 70px 0; border-top: 1px solid var(--line); }
-    .section-head { display: grid; grid-template-columns: minmax(180px, 300px) 1fr; gap: 52px; align-items: start; margin-bottom: 36px; }
-    h2 { font-size: clamp(30px, 4vw, 52px); line-height: 1; letter-spacing: -.045em; margin: 0; }
-    .section-kicker { font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; color: var(--muted); max-width: 660px; margin: 0; }
-    .grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 18px; }
-    .card { background: var(--card); border: 1px solid var(--line); border-radius: 24px; padding: 26px; box-shadow: var(--shadow); }
-    .card h3 { margin: 0 0 12px; font-size: 24px; line-height: 1.1; letter-spacing: -.025em; }
-    .card p { margin: 0 0 14px; color: var(--muted); font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; font-size: 15px; }
-    .card ul { margin: 16px 0 0; padding-left: 18px; color: #3f3a33; font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; font-size: 15px; }
-    .case { display: grid; grid-template-columns: 1fr 1.25fr; gap: 18px; margin-bottom: 18px; }
-    .case .meta { background: var(--soft); border-radius: 24px; padding: 26px; border: 1px solid var(--line); }
-    .tag { display: inline-flex; margin: 0 8px 8px 0; padding: 6px 10px; border: 1px solid var(--line); border-radius: 999px; font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; font-size: 13px; color: var(--muted); background: rgba(255,255,255,.45); }
-    .timeline { display: grid; gap: 14px; }
-    .role { display: grid; grid-template-columns: 220px 1fr; gap: 22px; padding: 22px 0; border-bottom: 1px solid var(--line); }
-    .role:last-child { border-bottom: 0; }
-    .role time { font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; color: var(--muted); font-size: 14px; }
-    .role h3 { margin: 0 0 6px; font-size: 22px; }
-    .role p { margin: 0; color: var(--muted); font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
-    .contact { background: var(--ink); color: var(--bg); border-radius: 34px; padding: 44px; display: grid; grid-template-columns: 1fr auto; gap: 28px; align-items: center; }
-    .contact p { color: rgba(247,244,239,.72); max-width: 700px; margin: 10px 0 0; font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
-    .contact .btn { border-color: rgba(247,244,239,.85); color: var(--bg); }
-    footer { padding: 40px 0; color: var(--muted); font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; font-size: 14px; }
-    @media (max-width: 860px) {
-      .nav { align-items: flex-start; flex-direction: column; padding: 18px 0; }
-      nav { justify-content: flex-start; }
-      .stats, .grid { grid-template-columns: 1fr; }
-      .section-head, .case, .role, .contact { grid-template-columns: 1fr; }
-      .hero { padding-top: 56px; }
+    .brand { font-weight: 800; text-decoration: none; letter-spacing: -.02em; }
+    .nav-links { display: flex; gap: 18px; flex-wrap: wrap; justify-content: flex-end; }
+    .nav-links a { text-decoration: none; color: var(--muted); font-size: 14px; font-weight: 650; }
+    .nav-links a:hover { color: var(--ink); }
+
+    .hero { padding: 76px 0 86px; }
+    .hero-grid { display: grid; grid-template-columns: minmax(0, 1.1fr) 360px; gap: 56px; align-items: start; }
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 20px;
+      color: var(--clay);
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+    }
+    .eyebrow::before { content: ""; width: 8px; height: 8px; border-radius: 999px; background: var(--green); }
+    h1 {
+      font-family: "Newsreader", ui-serif, Georgia, serif;
+      font-size: clamp(46px, 6.5vw, 82px);
+      line-height: 1.08;
+      letter-spacing: -.01em;
+      font-weight: 650;
+      max-width: 830px;
+      margin: 0 0 24px;
+      text-wrap: balance;
+    }
+    .lead {
+      max-width: 760px;
+      margin: 0;
+      color: #38332d;
+      font-size: clamp(19px, 2vw, 24px);
+      line-height: 1.48;
+      letter-spacing: -.01em;
+    }
+    .target-row { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 28px; }
+    .tag {
+      display: inline-flex;
+      align-items: center;
+      border-radius: 999px;
+      padding: 7px 10px;
+      background: var(--green-bg);
+      color: var(--green);
+      font-size: 12px;
+      font-weight: 750;
+      white-space: nowrap;
+    }
+    .tag.blue { background: var(--blue-bg); color: var(--blue); }
+    .tag.clay { background: var(--red-bg); color: var(--clay); }
+    .tag.yellow { background: var(--yellow-bg); color: #76520f; }
+    .actions { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 32px; }
+    .button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 44px;
+      padding: 0 15px;
+      border-radius: 8px;
+      border: 1px solid var(--line);
+      background: var(--paper);
+      text-decoration: none;
+      font-weight: 750;
+      font-size: 14px;
+      transition: transform 220ms var(--ease), background 220ms var(--ease), border-color 220ms var(--ease);
+    }
+    .button.primary { background: var(--ink); color: #fffdf8; border-color: var(--ink); }
+    .button:hover { transform: translateY(-1px); border-color: #c7bbae; }
+    .button:active { transform: scale(.985); }
+
+    .summary-card {
+      background: var(--paper);
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      padding: 22px;
+      position: sticky;
+      top: 24px;
+      box-shadow: 0 10px 36px rgba(35,28,20,.045);
+    }
+    .summary-card h2 {
+      font-size: 15px;
+      margin: 0 0 16px;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+    .now { font-size: 18px; line-height: 1.35; margin: 0 0 20px; font-weight: 720; }
+    .metrics { display: grid; gap: 1px; background: var(--line-soft); border: 1px solid var(--line-soft); border-radius: 12px; overflow: hidden; }
+    .metric { background: #fffefa; padding: 16px; display: grid; grid-template-columns: minmax(126px, max-content) 1fr; gap: 14px; align-items: baseline; }
+    .metric strong { color: var(--green); font-size: 28px; line-height: 1; letter-spacing: -.01em; }
+    .metric span { color: var(--muted); font-size: 13px; font-weight: 650; }
+
+    section { padding: 72px 0; border-top: 1px solid var(--line); }
+    .section-head { display: grid; grid-template-columns: 280px 1fr; gap: 44px; margin-bottom: 26px; }
+    h2.section-title {
+      font-family: "Newsreader", ui-serif, Georgia, serif;
+      font-size: clamp(34px, 4vw, 54px);
+      line-height: 1.05;
+      letter-spacing: -.02em;
+      margin: 0;
+      font-weight: 650;
+    }
+    .section-note { margin: 0; color: var(--muted); max-width: 640px; font-size: 16px; }
+    .grid { display: grid; grid-template-columns: repeat(12, 1fr); gap: 14px; }
+    .card {
+      background: var(--paper);
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      padding: 24px;
+      min-height: 210px;
+      transition: transform 220ms var(--ease), box-shadow 220ms var(--ease), border-color 220ms var(--ease);
+    }
+    .card:hover { transform: translateY(-2px); border-color: #cbbfaf; box-shadow: 0 12px 34px rgba(35,28,20,.05); }
+    .span-4 { grid-column: span 4; }
+    .span-5 { grid-column: span 5; }
+    .span-7 { grid-column: span 7; }
+    .card h3 { margin: 12px 0 10px; font-size: 21px; line-height: 1.22; letter-spacing: -.02em; }
+    .card p { margin: 0; color: var(--muted); font-size: 15px; }
+    .card ul { margin: 18px 0 0; padding: 0; list-style: none; display: grid; gap: 8px; color: #464039; font-size: 14px; }
+    .card li::before { content: "—"; color: var(--clay); margin-right: 8px; }
+
+    .work-label { color: var(--clay); font-size: 12px; font-weight: 800; text-transform: uppercase; letter-spacing: .1em; }
+    .proof-strip {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1px;
+      background: var(--line-soft);
+      border: 1px solid var(--line-soft);
+      border-radius: 16px;
+      overflow: hidden;
+      margin-top: 22px;
+    }
+    .proof-item { background: var(--paper); padding: 22px; }
+    .proof-item strong { display: block; color: var(--green); font-size: 34px; line-height: 1; letter-spacing: -.03em; margin-bottom: 8px; }
+    .proof-item span { color: var(--muted); font-size: 13px; font-weight: 650; }
+
+    .timeline { border-top: 1px solid var(--line-soft); }
+    .role { display: grid; grid-template-columns: 170px 1fr; gap: 28px; padding: 20px 0; border-bottom: 1px solid var(--line-soft); }
+    .role time { color: var(--muted); font-size: 13px; font-weight: 750; }
+    .role h3 { margin: 0 0 4px; font-size: 18px; letter-spacing: -.015em; }
+    .role p { margin: 0; color: var(--muted); font-size: 14px; }
+
+    .contact-card {
+      background: #171512;
+      color: #fffdf8;
+      border-radius: 18px;
+      padding: 34px;
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 26px;
+      align-items: center;
+    }
+    .contact-card h2 { color: #fffdf8; }
+    .contact-card p { color: rgba(255,253,248,.72); max-width: 680px; margin: 10px 0 0; }
+    .contact-card .button { background: #fffdf8; color: #171512; border-color: #fffdf8; }
+    footer { padding: 34px 0 58px; color: var(--muted); font-size: 13px; }
+
+    .reveal { animation: fadeUp 650ms var(--ease) both; }
+    .d1 { animation-delay: 90ms; } .d2 { animation-delay: 160ms; }
+    @keyframes fadeUp { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
+
+    @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } .reveal, .card, .button { animation: none; transition: none; } }
+    @media (max-width: 920px) {
+      .hero-grid, .section-head, .contact-card { grid-template-columns: 1fr; }
+      .summary-card { position: static; }
+      .grid { grid-template-columns: 1fr; }
+      .span-4, .span-5, .span-7 { grid-column: auto; }
+      .proof-strip { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (max-width: 640px) {
+      .wrap { width: min(var(--max), calc(100% - 28px)); }
+      header { padding-top: 18px; }
+      .nav { align-items: flex-start; flex-direction: column; }
+      .nav-links { gap: 12px; }
+      .hero { padding: 54px 0 62px; }
+      h1 { font-size: clamp(42px, 12vw, 62px); }
+      .metric { grid-template-columns: 1fr; gap: 4px; }
+      .proof-strip { grid-template-columns: 1fr; }
+      .role { grid-template-columns: 1fr; gap: 6px; }
+      .contact-card { padding: 26px; }
     }
   </style>
 </head>
 <body>
-  <header>
-    <div class="wrap nav">
+  <header class="wrap">
+    <nav class="nav" aria-label="Main navigation">
       <a class="brand" href="#top">Jacky Goh</a>
-      <nav aria-label="Main navigation">
+      <div class="nav-links">
+        <a href="#work">Work</a>
         <a href="#fit">Fit</a>
-        <a href="#case-studies">Case studies</a>
-        <a href="#projects">Projects</a>
         <a href="#experience">Experience</a>
         <a href="#contact">Contact</a>
-      </nav>
-    </div>
+      </div>
+    </nav>
   </header>
 
   <main id="top">
     <section class="hero wrap" style="border-top:0">
-      <div class="eyebrow">Singapore • Founder-operator • AI product & technical systems</div>
-      <h1>I turn ambiguous product and business problems into shipped systems.</h1>
-      <p class="lead">Founder & CEO of Rewards Bunny, building across programmable rewards, commerce, Web3, technical infrastructure, and emerging AI-agent workflows. I work best where product judgment, technical fluency, commercial ownership, and execution all matter.</p>
-      <div class="actions">
-        <a class="btn primary" href="mailto:gohkimnam@gmail.com">Email me</a>
-        <a class="btn" href="https://www.linkedin.com/in/jackygohsg/">LinkedIn</a>
-        <a class="btn" href="https://github.com/JackyGohSG">GitHub</a>
-      </div>
-      <div class="stats" aria-label="Selected career proof points">
-        <div class="stat"><strong>120k+</strong><span>registered Rewards Bunny users</span></div>
-        <div class="stat"><strong>10k+</strong><span>merchants and brands</span></div>
-        <div class="stat"><strong>US$7M+</strong><span>cumulative GMV</span></div>
-        <div class="stat"><strong>20x</strong><span>infrastructure cost reduction</span></div>
-      </div>
-    </section>
-
-    <section id="fit">
-      <div class="wrap">
-        <div class="section-head">
-          <h2>Best-fit work</h2>
-          <p class="section-kicker">I am not trying to fit into one narrow ladder. My value is in moving between business context, product thinking, technical systems, and launch execution.</p>
+      <div class="hero-grid">
+        <div class="reveal">
+          <div class="eyebrow">Founder-operator · Singapore</div>
+          <h1>I build the bridge between product, systems, and launch.</h1>
+          <p class="lead">Founder & CEO of Rewards Bunny. I work on ambiguous problems where product judgment, technical fluency, commercial execution, and AI workflows need to come together.</p>
+          <div class="target-row" aria-label="Target roles">
+            <span class="tag">AI Product</span><span class="tag blue">Technical Product</span><span class="tag clay">Founder’s Office</span><span class="tag yellow">AI Automation</span>
+          </div>
+          <div class="actions">
+            <a class="button primary" href="mailto:gohkimnam@gmail.com">Email me</a>
+            <a class="button" href="https://www.linkedin.com/in/jackygohsg/">LinkedIn</a>
+            <a class="button" href="https://github.com/JackyGohSG">GitHub</a>
+          </div>
         </div>
-        <div class="grid">
-          <article class="card"><h3>AI Product & Technical Product</h3><p>Turning vague AI or platform opportunities into product direction, requirements, workflows, launch plans, and iteration loops.</p><span class="tag">AI PM</span><span class="tag">Technical PM</span><span class="tag">Product Strategy</span></article>
-          <article class="card"><h3>Founder’s Office / Special Projects</h3><p>Taking ambiguous CEO/CTO priorities, structuring the problem, aligning stakeholders, and driving execution without constant supervision.</p><span class="tag">Chief of Staff Tech</span><span class="tag">Strategic Projects</span></article>
-          <article class="card"><h3>AI Solutions & Automation</h3><p>Mapping real business workflows into agentic systems, tool interfaces, structured prompts, APIs, and operational automation.</p><span class="tag">LLM workflows</span><span class="tag">Agents</span><span class="tag">MCP concepts</span></article>
-        </div>
+        <aside class="summary-card reveal d1" aria-label="Career summary">
+          <h2>Currently</h2>
+          <p class="now">Founder & CEO at Rewards Bunny — programmable rewards for commerce, Web3, and AI.</p>
+          <div class="metrics">
+            <div class="metric"><strong>120k+</strong><span>registered users</span></div>
+            <div class="metric"><strong>10k+</strong><span>merchants / brands</span></div>
+            <div class="metric"><strong>US$7M+</strong><span>cumulative GMV</span></div>
+            <div class="metric"><strong>20x</strong><span>infra cost reduction</span></div>
+          </div>
+        </aside>
       </div>
     </section>
 
-    <section id="case-studies">
-      <div class="wrap">
-        <div class="section-head">
-          <h2>Case studies</h2>
-          <p class="section-kicker">Short versions today; deeper public writeups are being prepared. A private proof pack is available selectively for interview or due-diligence contexts.</p>
-        </div>
-        <article class="case">
-          <div class="meta"><h3>Rewards Bunny platform</h3><p>Programmable rewards platform across cashback, merchant discovery, attribution, identity, segmentation, payout workflows, and partner integrations.</p><span class="tag">Product</span><span class="tag">Rewards</span><span class="tag">Commerce</span><span class="tag">AI surfaces</span></div>
-          <div class="card"><h3>From app wedge to platform system</h3><p>The live app proves real user behavior and incentives. The platform underneath connects reward rules, attribution/tracking, identity, payout orchestration, merchant integrations, and an agent-ready access layer for future AI workflows.</p><ul><li>120,000+ registered users</li><li>10,000+ merchants/brands</li><li>US$7M+ cumulative GMV</li><li>Product, growth, partnerships, operations, and technical systems owned end to end</li></ul></div>
+    <section id="work" class="wrap reveal">
+      <div class="section-head">
+        <h2 class="section-title">Selected work</h2>
+        <p class="section-note">Short, high-signal proof points. Full case studies can sit one click deeper.</p>
+      </div>
+      <div class="grid">
+        <article class="card span-7">
+          <span class="work-label">Rewards Bunny</span>
+          <h3>Built a rewards platform with real users, merchants, and GMV.</h3>
+          <ul><li>Cashback, attribution, merchant integrations</li><li>Reward rules, identity, segmentation, payouts</li><li>Agent-ready commerce direction</li></ul>
         </article>
-        <article class="case">
-          <div class="meta"><h3>Infrastructure migration</h3><p>Reduced infrastructure cost while preserving production continuity, database integrity, backups, Docker deployments, DNS/SSL, and operational reliability.</p><span class="tag">Technical product</span><span class="tag">Cloud</span><span class="tag">Cost optimisation</span></div>
-          <div class="card"><h3>GCP → Hetzner + CapRover + local DB</h3><p>At startup stage, a managed-cloud setup reached a peak monthly charge of US$1,581.83. I planned and executed a migration to Hetzner with CapRover and a local database architecture, reducing infrastructure costs by approximately 20x.</p><ul><li>Peak monthly cloud charge: US$1,581.83</li><li>Approximate cost reduction: 20x</li><li>Migration scope: backups, database integrity, Docker deployments, DNS/SSL, service continuity</li></ul></div>
+        <article class="card span-5">
+          <span class="work-label">Infrastructure</span>
+          <h3>Reduced infra costs by approximately 20x.</h3>
+          <p>Peak cloud charge: US$1,581.83/month. Migrated toward Hetzner, CapRover, and local DB architecture.</p>
         </article>
-        <article class="case">
-          <div class="meta"><h3>VibeLaunch Framework</h3><p>Open-source docs and audit standard for launching vibe-coded apps safely.</p><span class="tag">AI agents</span><span class="tag">Launch workflows</span><span class="tag">Developer tooling</span></div>
-          <div class="card"><h3>Human + AI-agent launch standard</h3><p>VibeLaunch turns messy launch knowledge into structured prompts, YAML checklists, evidence requirements, release gates, hosting/deployment checks, Cloudflare workflows, and agent-readable audit steps.</p><ul><li><a href="https://github.com/JackyGohSG/vibelaunch-framework">GitHub repo</a></li><li><a href="https://jackygohsg.github.io/vibelaunch-framework/">Live docs</a></li><li>Designed for solo builders, AI-assisted developers, and agent-based project audits</li></ul></div>
+        <article class="card span-5">
+          <span class="work-label">VibeLaunch</span>
+          <h3>Open-source launch standard for AI-assisted builders.</h3>
+          <p><a href="https://github.com/JackyGohSG/vibelaunch-framework">GitHub repo</a> · <a href="https://jackygohsg.github.io/vibelaunch-framework/">Live docs</a></p>
+        </article>
+        <article class="card span-7">
+          <span class="work-label">Applied ML</span>
+          <h3>Hotel No-Show Prediction.</h3>
+          <p>119,390 usable rows. Random Forest ROC AUC ~0.796. <a href="https://github.com/JackyGohSG/aiap-hotel-noshow-25052026">View repo</a>.</p>
         </article>
       </div>
     </section>
 
-    <section id="projects">
-      <div class="wrap">
-        <div class="section-head">
-          <h2>Selected projects</h2>
-          <p class="section-kicker">Proof points for applied AI, technical systems, data literacy, and product execution.</p>
-        </div>
-        <div class="grid">
-          <article class="card"><h3>VibeLaunch Framework</h3><p>Open-source framework and docs site for launch readiness and AI-agent audits.</p><a href="https://github.com/JackyGohSG/vibelaunch-framework">View repo →</a></article>
-          <article class="card"><h3>Hotel No-Show Prediction</h3><p>Applied ML project using Python/scikit-learn with 119,390 usable rows and Random Forest ROC AUC around 0.796.</p><a href="https://github.com/JackyGohSG/aiap-hotel-noshow-25052026">View repo →</a></article>
-          <article class="card"><h3>AI commerce / rewards direction</h3><p>Exploring agent-ready interfaces for rewards systems: MCP concepts, skills-style interfaces, structured prompts, and API-based workflows.</p></article>
-        </div>
+    <section id="fit" class="wrap reveal">
+      <div class="section-head">
+        <h2 class="section-title">Best-fit problems</h2>
+        <p class="section-note">Where a founder-operator background is an advantage, not a detour.</p>
+      </div>
+      <div class="proof-strip">
+        <div class="proof-item"><strong>01</strong><span>Turn vague AI/product opportunities into useful products.</span></div>
+        <div class="proof-item"><strong>02</strong><span>Bridge business stakeholders and technical systems.</span></div>
+        <div class="proof-item"><strong>03</strong><span>Run strategic projects without hand-holding.</span></div>
+        <div class="proof-item"><strong>04</strong><span>Automate workflows with practical AI and APIs.</span></div>
       </div>
     </section>
 
-    <section id="experience">
-      <div class="wrap">
-        <div class="section-head">
-          <h2>Experience</h2>
-          <p class="section-kicker">A founder-led career across product, technical systems, incentives, consumer behavior, growth, partnerships, and commercial execution.</p>
-        </div>
-        <div class="timeline">
-          <div class="role"><time>2021–Present</time><div><h3>Founder & CEO — Rewards Bunny</h3><p>Programmable rewards platform for commerce, Web3, and AI. Product, strategy, partnerships, growth, infrastructure, and platform narrative.</p></div></div>
-          <div class="role"><time>Jan 2022–Jun 2022</time><div><h3>Global Launch Batch 4 — 500 Startups</h3><p>Startup programme based in San Francisco.</p></div></div>
-          <div class="role"><time>Sep 2019–2021</time><div><h3>Co-Founder & CTO — WhaleSave</h3><p>Cashback experience for gaming and digital purchases.</p></div></div>
-          <div class="role"><time>Oct 2018–2021</time><div><h3>Co-Founder / CTO — DinoMao</h3><p>Singapore-developed digital claw-machine app. AppsUp 2020 - Best Game Category (DinoMao), Huawei Developers.</p></div></div>
-          <div class="role"><time>May 2016–Sep 2019</time><div><h3>Co-Founder / COO — GOshot</h3><p>Consumer-product startup; product development, research, positioning, growth, partnerships, media, and operations.</p></div></div>
-          <div class="role"><time>2014–2018</time><div><h3>Business Growth Consultant — J Consultancy Group</h3><p>Growth, business development, marketing, client relationships, strategy, and execution planning.</p></div></div>
-        </div>
+    <section id="experience" class="wrap reveal">
+      <div class="section-head">
+        <h2 class="section-title">Experience</h2>
+        <p class="section-note">A founder-led path across product, rewards, consumer tech, growth, and technical operations.</p>
+      </div>
+      <div class="timeline">
+        <div class="role"><time>2021–Present</time><div><h3>Founder & CEO · Rewards Bunny</h3><p>Programmable rewards platform for commerce, Web3, and AI.</p></div></div>
+        <div class="role"><time>Jan–Jun 2022</time><div><h3>Global Launch Batch 4 · 500 Startups</h3><p>Startup programme.</p></div></div>
+        <div class="role"><time>2019–2021</time><div><h3>Co-Founder & CTO · WhaleSave</h3><p>Cashback for gaming and digital purchases.</p></div></div>
+        <div class="role"><time>2018–2021</time><div><h3>Co-Founder / CTO · DinoMao</h3><p>Singapore-developed digital claw-machine app.</p></div></div>
+        <div class="role"><time>2016–2019</time><div><h3>Co-Founder / COO · GOshot</h3><p>Consumer product, growth, media, and partnerships.</p></div></div>
       </div>
     </section>
 
-    <section id="contact">
-      <div class="wrap">
-        <div class="contact">
-          <div><h2>Let’s talk.</h2><p>I’m exploring AI Product, Technical Product, Founder’s Office / Chief of Staff Tech, Special Projects, and AI Solutions / Automation roles in Singapore or Singapore-compatible remote teams.</p></div>
-          <div class="actions"><a class="btn" href="mailto:gohkimnam@gmail.com">gohkimnam@gmail.com</a><a class="btn" href="https://www.linkedin.com/in/jackygohsg/">LinkedIn</a></div>
+    <section id="contact" class="wrap reveal">
+      <div class="contact-card">
+        <div>
+          <h2 class="section-title">Let’s talk.</h2>
+          <p>Exploring AI Product, Technical Product, Founder’s Office, Special Projects, and AI Solutions roles.</p>
+        </div>
+        <div class="actions" style="margin-top:0">
+          <a class="button primary" href="mailto:gohkimnam@gmail.com">Email</a>
+          <a class="button" href="https://www.linkedin.com/in/jackygohsg/">LinkedIn</a>
         </div>
       </div>
     </section>
   </main>
 
-  <footer><div class="wrap">© 2026 Jacky Goh. Built as a concise career evidence hub; deeper case studies in progress.</div></footer>
+  <footer class="wrap">© 2026 Jacky Goh · Singapore · GitHub: JackyGohSG</footer>
 </body>
 </html>
