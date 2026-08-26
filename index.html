@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Jacky Goh — Founder Operator</title>
   <meta name="description" content="Jacky Goh is a Singapore founder-operator for AI Product, Technical Product, Founder’s Office, and AI Solutions roles." />
+  <meta property="og:image" content="https://jackygohsg.github.io/assets/jacky-goh-headshot.jpg" />
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700;800&family=Newsreader:opsz,wght@6..72,500..700&display=swap" rel="stylesheet">
@@ -137,6 +138,10 @@
       text-transform: uppercase;
       color: var(--muted);
     }
+    .portrait-row { display: grid; grid-template-columns: 92px 1fr; gap: 16px; align-items: center; margin-bottom: 20px; }
+    .headshot { width: 92px; height: 92px; object-fit: cover; border-radius: 18px; border: 1px solid var(--line); box-shadow: 0 12px 28px rgba(35,28,20,.08); }
+    .portrait-row h2 { margin-bottom: 8px; }
+    .portrait-row .now { margin: 0; font-size: 16px; }
     .now { font-size: 18px; line-height: 1.35; margin: 0 0 20px; font-weight: 720; }
     .metrics { display: grid; gap: 1px; background: var(--line-soft); border: 1px solid var(--line-soft); border-radius: 12px; overflow: hidden; }
     .metric { background: #fffefa; padding: 16px; display: grid; grid-template-columns: minmax(126px, max-content) 1fr; gap: 14px; align-items: baseline; }
@@ -227,6 +232,8 @@
       .nav-links { gap: 12px; }
       .hero { padding: 54px 0 62px; }
       h1 { font-size: clamp(42px, 12vw, 62px); }
+      .portrait-row { grid-template-columns: 76px 1fr; }
+      .headshot { width: 76px; height: 76px; border-radius: 15px; }
       .metric { grid-template-columns: 1fr; gap: 4px; }
       .proof-strip { grid-template-columns: 1fr; }
       .role { grid-template-columns: 1fr; gap: 6px; }
@@ -264,8 +271,13 @@
           </div>
         </div>
         <aside class="summary-card reveal d1" aria-label="Career summary">
-          <h2>Currently</h2>
-          <p class="now">Founder & CEO at Rewards Bunny — programmable rewards for commerce, Web3, and AI.</p>
+          <div class="portrait-row">
+            <img class="headshot" src="assets/jacky-goh-headshot.jpg" alt="Jacky Goh" width="92" height="92" />
+            <div>
+              <h2>Currently</h2>
+              <p class="now">Founder & CEO at Rewards Bunny — programmable rewards for commerce, Web3, and AI.</p>
+            </div>
+          </div>
           <div class="metrics">
             <div class="metric"><strong>120k+</strong><span>registered users</span></div>
             <div class="metric"><strong>10k+</strong><span>merchants / brands</span></div>
