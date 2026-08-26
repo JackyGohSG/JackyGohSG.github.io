@@ -1,0 +1,227 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Rewards Bunny Case Study — Jacky Goh</title>
+  <meta name="description" content="Rewards Bunny case study: Jacky Goh built a rewards platform with 120k+ users, 10k+ merchants/brands, US$7M+ GMV, and product/system ownership across commerce, attribution, payouts, and AI-ready workflows." />
+  <meta property="og:title" content="Rewards Bunny Case Study — Jacky Goh" />
+  <meta property="og:description" content="Founder/operator case study across product, technical systems, commercial execution, and AI-ready rewards workflows." />
+  <meta property="og:image" content="https://jackygohsg.github.io/assets/jacky-goh-headshot-ai-original-candidate-2.jpg" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700;800&family=Newsreader:opsz,wght@6..72,500..700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #f7f4ee; --paper: #fffdf8; --ink: #191715; --muted: #68625a;
+      --line: #ded6cb; --line-soft: #ebe4da; --green: #1f5a4f; --clay: #9a5c34;
+      --blue: #264f82; --yellow-bg: #f5ead0; --green-bg: #e8f0e7; --blue-bg: #e6edf4;
+      --red-bg: #f3e5df; --max: 1280px; --ease: cubic-bezier(.16,1,.3,1);
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; background: var(--bg); }
+    body {
+      margin: 0;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at 92% 8%, rgba(31,90,79,.08), transparent 34rem),
+        radial-gradient(circle at 6% 22%, rgba(154,92,52,.08), transparent 26rem),
+        var(--bg);
+      font-family: "Geist", ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+      line-height: 1.6;
+    }
+    a { color: inherit; text-underline-offset: 3px; }
+    .wrap { width: min(var(--max), calc(100% - clamp(32px, 7vw, 96px))); margin: 0 auto; }
+    header { padding: 24px 0 10px; }
+    .nav { display: flex; justify-content: space-between; align-items: center; gap: 24px; padding-bottom: 22px; border-bottom: 1px solid var(--line); }
+    .brand { font-weight: 800; text-decoration: none; letter-spacing: -.02em; }
+    .nav-links { display: flex; gap: 18px; flex-wrap: wrap; justify-content: flex-end; }
+    .nav-links a { text-decoration: none; color: var(--muted); font-size: 14px; font-weight: 650; }
+    .nav-links a:hover { color: var(--ink); }
+
+    .hero { min-height: calc(92svh - 86px); padding: clamp(54px, 7vh, 88px) 0; display: grid; align-items: center; }
+    .hero-grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(360px, 430px); gap: clamp(48px, 7vw, 96px); align-items: center; }
+    .eyebrow { display: inline-flex; align-items: center; gap: 8px; margin-bottom: 18px; color: var(--clay); font-size: 12px; font-weight: 800; letter-spacing: .12em; text-transform: uppercase; }
+    .eyebrow::before { content: ""; width: 8px; height: 8px; border-radius: 999px; background: var(--green); }
+    h1 { font-family: "Newsreader", ui-serif, Georgia, serif; font-size: clamp(48px, 6vw, 92px); line-height: 1.05; letter-spacing: -.012em; font-weight: 650; max-width: 920px; margin: 0 0 22px; text-wrap: balance; }
+    .lead { max-width: 760px; margin: 0; color: #38332d; font-size: clamp(19px, 1.65vw, 24px); line-height: 1.48; letter-spacing: -.01em; }
+    .actions { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 30px; }
+    .button { display: inline-flex; align-items: center; justify-content: center; min-height: 44px; padding: 0 15px; border-radius: 8px; border: 1px solid var(--line); background: var(--paper); text-decoration: none; font-weight: 750; font-size: 14px; transition: transform 220ms var(--ease), border-color 220ms var(--ease); }
+    .button.primary { background: var(--ink); color: #fffdf8; border-color: var(--ink); }
+    .button:hover { transform: translateY(-1px); border-color: #c7bbae; }
+
+    .metric-card { background: var(--paper); border: 1px solid var(--line); border-radius: 18px; padding: clamp(22px, 2vw, 30px); box-shadow: 0 14px 42px rgba(35,28,20,.055); }
+    .metric-card h2 { margin: 0 0 16px; color: var(--muted); font-size: 14px; letter-spacing: .09em; text-transform: uppercase; }
+    .metrics { display: grid; gap: 1px; background: var(--line-soft); border: 1px solid var(--line-soft); border-radius: 14px; overflow: hidden; }
+    .metric { background: #fffefa; padding: 18px; display: grid; grid-template-columns: minmax(118px, max-content) 1fr; gap: 16px; align-items: baseline; }
+    .metric strong { color: var(--green); font-size: clamp(32px, 3.4vw, 48px); line-height: 1; letter-spacing: -.01em; }
+    .metric span { color: var(--muted); font-size: 13px; font-weight: 700; }
+    .note { margin: 16px 0 0; color: var(--muted); font-size: 13px; }
+
+    section { padding: 74px 0; border-top: 1px solid var(--line); }
+    .section-head { display: grid; grid-template-columns: 300px 1fr; gap: 48px; margin-bottom: 28px; }
+    h2.section-title { font-family: "Newsreader", ui-serif, Georgia, serif; font-size: clamp(34px, 4vw, 56px); line-height: 1.06; letter-spacing: -.015em; margin: 0; font-weight: 650; }
+    .section-note { margin: 0; color: var(--muted); max-width: 680px; font-size: 16px; }
+    .grid { display: grid; grid-template-columns: repeat(12, 1fr); gap: 14px; }
+    .card { background: var(--paper); border: 1px solid var(--line); border-radius: 16px; padding: 24px; min-height: 190px; }
+    .span-3 { grid-column: span 3; } .span-4 { grid-column: span 4; } .span-6 { grid-column: span 6; } .span-8 { grid-column: span 8; }
+    .label { color: var(--clay); font-size: 12px; font-weight: 800; text-transform: uppercase; letter-spacing: .1em; }
+    .card h3 { margin: 12px 0 10px; font-size: 22px; line-height: 1.2; letter-spacing: -.02em; }
+    .card p { margin: 0; color: var(--muted); font-size: 15px; }
+    .card ul { margin: 18px 0 0; padding: 0; list-style: none; display: grid; gap: 8px; color: #464039; font-size: 14px; }
+    .card li::before { content: "—"; color: var(--clay); margin-right: 8px; }
+
+    .system { background: var(--paper); border: 1px solid var(--line); border-radius: 18px; padding: 26px; }
+    .flow { display: grid; grid-template-columns: repeat(6, 1fr); gap: 10px; align-items: stretch; }
+    .node { min-height: 112px; border: 1px solid var(--line-soft); background: #fffefa; border-radius: 14px; padding: 16px; display: flex; flex-direction: column; justify-content: space-between; }
+    .node strong { color: var(--ink); font-size: 15px; line-height: 1.2; }
+    .node span { color: var(--muted); font-size: 12px; font-weight: 650; }
+    .node.future { border-style: dashed; background: var(--green-bg); }
+
+    .quote { background: #171512; color: #fffdf8; border-radius: 18px; padding: clamp(28px, 4vw, 46px); }
+    .quote p { font-family: "Newsreader", ui-serif, Georgia, serif; font-size: clamp(30px, 4vw, 56px); line-height: 1.08; letter-spacing: -.015em; margin: 0; max-width: 980px; }
+    .quote span { display: block; margin-top: 18px; color: rgba(255,253,248,.7); font-size: 14px; }
+
+    .table { display: grid; border: 1px solid var(--line-soft); border-radius: 16px; overflow: hidden; background: var(--line-soft); gap: 1px; }
+    .row { display: grid; grid-template-columns: 220px 1fr; gap: 20px; background: var(--paper); padding: 18px; }
+    .row strong { color: var(--green); }
+    .row span { color: var(--muted); }
+
+    footer { padding: 34px 0 58px; color: var(--muted); font-size: 13px; }
+    .reveal { animation: fadeUp 650ms var(--ease) both; }
+    .d1 { animation-delay: 90ms; }
+    @keyframes fadeUp { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
+
+    @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } .reveal, .button { animation: none; transition: none; } }
+    @media (max-width: 980px) {
+      .hero-grid, .section-head { grid-template-columns: 1fr; }
+      .grid, .flow { grid-template-columns: 1fr; }
+      .span-3, .span-4, .span-6, .span-8 { grid-column: auto; }
+      .row { grid-template-columns: 1fr; gap: 4px; }
+    }
+    @media (max-width: 640px) {
+      .wrap { width: min(var(--max), calc(100% - 28px)); }
+      header { padding-top: 18px; }
+      .nav { align-items: flex-start; flex-direction: column; }
+      .nav-links { gap: 12px; }
+      .hero { min-height: auto; padding: 48px 0 62px; }
+      h1 { font-size: clamp(42px, 12vw, 62px); line-height: 1.08; }
+      .metric { grid-template-columns: 1fr; gap: 4px; }
+    }
+  </style>
+</head>
+<body>
+  <header class="wrap">
+    <nav class="nav" aria-label="Main navigation">
+      <a class="brand" href="../">Jacky Goh</a>
+      <div class="nav-links">
+        <a href="#overview">Overview</a>
+        <a href="#system">System</a>
+        <a href="#scope">Scope</a>
+        <a href="#fit">Role fit</a>
+      </div>
+    </nav>
+  </header>
+
+  <main>
+    <section class="hero wrap" id="overview" style="border-top:0">
+      <div class="hero-grid">
+        <div class="reveal">
+          <div class="eyebrow">Rewards Bunny case study</div>
+          <h1>Building rewards infrastructure from founder instinct to product system.</h1>
+          <p class="lead">Rewards Bunny is a Singapore-built rewards platform spanning cashback, merchant discovery, affiliate attribution, reward rules, payout workflows, and emerging AI-assisted commerce use cases.</p>
+          <div class="actions">
+            <a class="button primary" href="../">Back to portfolio</a>
+            <a class="button" href="mailto:gohkimnam@gmail.com">Contact Jacky</a>
+          </div>
+        </div>
+        <aside class="metric-card reveal d1" aria-label="Rewards Bunny proof points">
+          <h2>Proof points</h2>
+          <div class="metrics">
+            <div class="metric"><strong>120k+</strong><span>registered users</span></div>
+            <div class="metric"><strong>10k+</strong><span>merchants / brands</span></div>
+            <div class="metric"><strong>US$7M+</strong><span>cumulative GMV</span></div>
+            <div class="metric"><strong>2021–</strong><span>Founder & CEO</span></div>
+          </div>
+          <p class="note">Public case study. Some operational details are simplified; supporting proof can be shared selectively.</p>
+        </aside>
+      </div>
+    </section>
+
+    <section class="wrap">
+      <div class="section-head">
+        <h2 class="section-title">The problem</h2>
+        <p class="section-note">Rewards are simple at the surface. Underneath, the hard part is connecting users, merchants, incentives, attribution, and payout operations into one reliable product experience.</p>
+      </div>
+      <div class="grid">
+        <article class="card span-4"><span class="label">Users</span><h3>Make discovery and reward value obvious.</h3><p>Users need to find useful merchants, understand incentives, and trust that rewards are tracked correctly.</p></article>
+        <article class="card span-4"><span class="label">Merchants</span><h3>Connect supply without manual chaos.</h3><p>The platform needed to handle a broad merchant and brand network while keeping the user journey simple.</p></article>
+        <article class="card span-4"><span class="label">Operations</span><h3>Turn cashback into a dependable system.</h3><p>Affiliate attribution, reward logic, customer support, and payouts create operational complexity behind each transaction.</p></article>
+      </div>
+    </section>
+
+    <section id="system" class="wrap">
+      <div class="section-head">
+        <h2 class="section-title">Product system</h2>
+        <p class="section-note">The platform evolved into a set of connected product and operating layers rather than a single cashback page.</p>
+      </div>
+      <div class="system" aria-label="Rewards Bunny product system map">
+        <div class="flow">
+          <div class="node"><strong>User journey</strong><span>Discovery, clicks, rewards intent</span></div>
+          <div class="node"><strong>Merchant layer</strong><span>Brands, offers, partner supply</span></div>
+          <div class="node"><strong>Attribution</strong><span>Tracked commissions, validation</span></div>
+          <div class="node"><strong>Reward logic</strong><span>Rules, segmentation, incentives</span></div>
+          <div class="node"><strong>Payout ops</strong><span>Balances, support, reliability</span></div>
+          <div class="node future"><strong>AI-ready access</strong><span>Agent-readable workflows, APIs, MCP concepts</span></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="scope" class="wrap">
+      <div class="section-head">
+        <h2 class="section-title">Founder scope</h2>
+        <p class="section-note">The strongest signal is not one narrow function. It is end-to-end ownership across product, technical, commercial, and operational decisions.</p>
+      </div>
+      <div class="grid">
+        <article class="card span-3"><span class="label">Product</span><h3>Owned the journey.</h3><ul><li>Rewards discovery</li><li>Incentive design</li><li>User retention loops</li></ul></article>
+        <article class="card span-3"><span class="label">Technical</span><h3>Bridged implementation.</h3><ul><li>APIs and integrations</li><li>Databases and cloud infra</li><li>Production troubleshooting</li></ul></article>
+        <article class="card span-3"><span class="label">Commercial</span><h3>Built the network.</h3><ul><li>Merchant ecosystem</li><li>Affiliate relationships</li><li>Partnership tradeoffs</li></ul></article>
+        <article class="card span-3"><span class="label">Operations</span><h3>Kept it working.</h3><ul><li>Payout processes</li><li>Support workflows</li><li>Vendor coordination</li></ul></article>
+      </div>
+    </section>
+
+    <section class="wrap">
+      <div class="quote">
+        <p>“The useful skill is turning a messy business system into something users can trust and teams can operate.”</p>
+        <span>Why Rewards Bunny matters for AI Product, Technical Product, Founder’s Office, and AI Automation roles.</span>
+      </div>
+    </section>
+
+    <section id="fit" class="wrap">
+      <div class="section-head">
+        <h2 class="section-title">Hiring signal</h2>
+        <p class="section-note">What this case study is meant to prove to a hiring manager.</p>
+      </div>
+      <div class="table">
+        <div class="row"><strong>AI Product</strong><span>Experience turning ambiguous commerce/rewards opportunities into product direction, user journeys, and agent-ready workflow concepts.</span></div>
+        <div class="row"><strong>Technical Product</strong><span>Comfort with APIs, attribution, databases, infrastructure, operational reliability, and product-engineering tradeoffs.</span></div>
+        <div class="row"><strong>Founder’s Office</strong><span>Evidence of broad ownership across strategy, product, partnerships, operations, vendors, and execution without hand-holding.</span></div>
+        <div class="row"><strong>AI Automation</strong><span>A natural bridge from real business workflows into structured prompts, agent-readable docs, MCP-style interfaces, and API-based automation.</span></div>
+      </div>
+    </section>
+
+    <section class="wrap">
+      <div class="section-head">
+        <h2 class="section-title">Next evidence to add</h2>
+        <p class="section-note">To make this page even stronger later: selected screenshots, a product architecture diagram, metric proof extracts, and one short walkthrough video. Sensitive raw data should stay private.</p>
+      </div>
+      <div class="actions">
+        <a class="button primary" href="mailto:gohkimnam@gmail.com">Discuss relevant roles</a>
+        <a class="button" href="../">Return home</a>
+      </div>
+    </section>
+  </main>
+
+  <footer class="wrap">© 2026 Jacky Goh · Rewards Bunny case study · Public aggregate metrics only</footer>
+</body>
+</html>
