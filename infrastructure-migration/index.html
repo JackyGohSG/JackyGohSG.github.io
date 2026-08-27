@@ -1,0 +1,239 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Infrastructure Migration Case Study — Jacky Goh</title>
+  <meta name="description" content="GCP to Hetzner and CapRover infrastructure migration case study: approximately 20x cost reduction from a peak US$1,581.83/month cloud charge while preserving production continuity." />
+  <meta property="og:title" content="Infrastructure Migration Case Study — Jacky Goh" />
+  <meta property="og:description" content="How Jacky Goh reduced Rewards Bunny infrastructure costs by approximately 20x while managing production risk." />
+  <meta property="og:image" content="https://jackygohsg.github.io/assets/jacky-goh-headshot-ai-original-candidate-2.jpg" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700;800&family=Newsreader:opsz,wght@6..72,500..700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #f7f4ee; --paper: #fffdf8; --ink: #191715; --muted: #68625a;
+      --line: #ded6cb; --line-soft: #ebe4da; --green: #1f5a4f; --clay: #9a5c34;
+      --blue: #264f82; --yellow-bg: #f5ead0; --green-bg: #e8f0e7; --blue-bg: #e6edf4;
+      --red-bg: #f3e5df; --max: 1280px; --ease: cubic-bezier(.16,1,.3,1);
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; background: var(--bg); }
+    body {
+      margin: 0; color: var(--ink);
+      background:
+        radial-gradient(circle at 92% 8%, rgba(31,90,79,.08), transparent 34rem),
+        radial-gradient(circle at 7% 22%, rgba(154,92,52,.08), transparent 28rem),
+        var(--bg);
+      font-family: "Geist", ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+      line-height: 1.6;
+    }
+    a { color: inherit; text-underline-offset: 3px; }
+    .wrap { width: min(var(--max), calc(100% - clamp(32px, 7vw, 96px))); margin: 0 auto; }
+    header { padding: 24px 0 10px; }
+    .nav { display: flex; justify-content: space-between; align-items: center; gap: 24px; padding-bottom: 22px; border-bottom: 1px solid var(--line); }
+    .brand { font-weight: 800; text-decoration: none; letter-spacing: -.02em; }
+    .nav-links { display: flex; gap: 18px; flex-wrap: wrap; justify-content: flex-end; }
+    .nav-links a { text-decoration: none; color: var(--muted); font-size: 14px; font-weight: 650; }
+    .nav-links a:hover { color: var(--ink); }
+
+    .hero { min-height: calc(92svh - 86px); padding: clamp(54px, 7vh, 88px) 0; display: grid; align-items: center; }
+    .hero-grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(360px, 440px); gap: clamp(48px, 7vw, 96px); align-items: center; }
+    .eyebrow { display: inline-flex; align-items: center; gap: 8px; margin-bottom: 18px; color: var(--clay); font-size: 12px; font-weight: 800; letter-spacing: .12em; text-transform: uppercase; }
+    .eyebrow::before { content: ""; width: 8px; height: 8px; border-radius: 999px; background: var(--green); }
+    h1 { font-family: "Newsreader", ui-serif, Georgia, serif; font-size: clamp(48px, 6vw, 92px); line-height: 1.05; letter-spacing: -.012em; font-weight: 650; max-width: 940px; margin: 0 0 22px; text-wrap: balance; }
+    .lead { max-width: 780px; margin: 0; color: #38332d; font-size: clamp(19px, 1.65vw, 24px); line-height: 1.48; letter-spacing: -.01em; }
+    .actions { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 30px; }
+    .button { display: inline-flex; align-items: center; justify-content: center; min-height: 44px; padding: 0 15px; border-radius: 8px; border: 1px solid var(--line); background: var(--paper); text-decoration: none; font-weight: 750; font-size: 14px; transition: transform 220ms var(--ease), border-color 220ms var(--ease); }
+    .button.primary { background: var(--ink); color: #fffdf8; border-color: var(--ink); }
+    .button:hover { transform: translateY(-1px); border-color: #c7bbae; }
+
+    .metric-card { background: var(--paper); border: 1px solid var(--line); border-radius: 18px; padding: clamp(22px, 2vw, 30px); box-shadow: 0 14px 42px rgba(35,28,20,.055); }
+    .metric-card h2 { margin: 0 0 16px; color: var(--muted); font-size: 14px; letter-spacing: .09em; text-transform: uppercase; }
+    .metrics { display: grid; gap: 1px; background: var(--line-soft); border: 1px solid var(--line-soft); border-radius: 14px; overflow: hidden; }
+    .metric { background: #fffefa; padding: 18px; display: grid; grid-template-columns: 1fr; gap: 8px; align-items: baseline; }
+    .metric strong { color: var(--green); font-size: clamp(30px, 3.2vw, 46px); line-height: 1; letter-spacing: -.01em; }
+    .metric span { color: var(--muted); font-size: 13px; font-weight: 700; max-width: 260px; }
+    .note { margin: 16px 0 0; color: var(--muted); font-size: 13px; }
+
+    section { padding: 74px 0; border-top: 1px solid var(--line); }
+    .section-head { display: grid; grid-template-columns: 300px 1fr; gap: 48px; margin-bottom: 28px; }
+    h2.section-title { font-family: "Newsreader", ui-serif, Georgia, serif; font-size: clamp(34px, 4vw, 56px); line-height: 1.06; letter-spacing: -.015em; margin: 0; font-weight: 650; }
+    .section-note { margin: 0; color: var(--muted); max-width: 700px; font-size: 16px; }
+    .grid { display: grid; grid-template-columns: repeat(12, 1fr); gap: 14px; }
+    .card { background: var(--paper); border: 1px solid var(--line); border-radius: 16px; padding: 24px; min-height: 190px; }
+    .span-3 { grid-column: span 3; } .span-4 { grid-column: span 4; } .span-6 { grid-column: span 6; } .span-8 { grid-column: span 8; }
+    .label { color: var(--clay); font-size: 12px; font-weight: 800; text-transform: uppercase; letter-spacing: .1em; }
+    .card h3 { margin: 12px 0 10px; font-size: 22px; line-height: 1.2; letter-spacing: -.02em; }
+    .card p { margin: 0; color: var(--muted); font-size: 15px; }
+    .card ul { margin: 18px 0 0; padding: 0; list-style: none; display: grid; gap: 8px; color: #464039; font-size: 14px; }
+    .card li::before { content: "—"; color: var(--clay); margin-right: 8px; }
+
+    .migration-map { background: var(--paper); border: 1px solid var(--line); border-radius: 18px; padding: 26px; }
+    .map-grid { display: grid; grid-template-columns: 1fr 84px 1fr; gap: 16px; align-items: stretch; }
+    .stack { border: 1px solid var(--line-soft); border-radius: 16px; background: #fffefa; padding: 22px; }
+    .stack.after { background: var(--green-bg); }
+    .stack h3 { margin: 0 0 16px; font-size: 18px; }
+    .pill-list { display: flex; flex-wrap: wrap; gap: 8px; }
+    .pill { background: rgba(255,255,255,.7); border: 1px solid var(--line-soft); color: #464039; border-radius: 999px; padding: 7px 10px; font-size: 13px; font-weight: 650; }
+    .arrow { display: grid; place-items: center; color: var(--green); font-size: 34px; font-weight: 800; }
+
+    .risk-list { display: grid; gap: 1px; border: 1px solid var(--line-soft); background: var(--line-soft); border-radius: 16px; overflow: hidden; }
+    .risk { display: grid; grid-template-columns: 240px 1fr; gap: 18px; background: var(--paper); padding: 18px; }
+    .risk strong { color: var(--green); }
+    .risk span { color: var(--muted); }
+
+    .quote { background: #171512; color: #fffdf8; border-radius: 18px; padding: clamp(28px, 4vw, 46px); }
+    .quote p { font-family: "Newsreader", ui-serif, Georgia, serif; font-size: clamp(30px, 4vw, 56px); line-height: 1.08; letter-spacing: -.015em; margin: 0; max-width: 980px; }
+    .quote span { display: block; margin-top: 18px; color: rgba(255,253,248,.7); font-size: 14px; }
+
+    footer { padding: 34px 0 58px; color: var(--muted); font-size: 13px; }
+    .reveal { animation: fadeUp 650ms var(--ease) both; }
+    .d1 { animation-delay: 90ms; }
+    @keyframes fadeUp { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
+
+    @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } .reveal, .button { animation: none; transition: none; } }
+    @media (max-width: 980px) {
+      .hero-grid, .section-head, .map-grid { grid-template-columns: 1fr; }
+      .grid { grid-template-columns: 1fr; }
+      .span-3, .span-4, .span-6, .span-8 { grid-column: auto; }
+      .arrow { min-height: 24px; transform: rotate(90deg); }
+      .risk { grid-template-columns: 1fr; gap: 4px; }
+    }
+    @media (max-width: 640px) {
+      .wrap { width: min(var(--max), calc(100% - 28px)); }
+      header { padding-top: 18px; }
+      .nav { align-items: flex-start; flex-direction: column; }
+      .nav-links { gap: 12px; }
+      .hero { min-height: auto; padding: 48px 0 62px; }
+      h1 { font-size: clamp(42px, 12vw, 62px); line-height: 1.08; }
+      .metric { grid-template-columns: 1fr; gap: 4px; }
+    }
+  </style>
+</head>
+<body>
+  <header class="wrap">
+    <nav class="nav" aria-label="Main navigation">
+      <a class="brand" href="../">Jacky Goh</a>
+      <div class="nav-links">
+        <a href="#overview">Overview</a>
+        <a href="#map">Migration</a>
+        <a href="#risk">Risk</a>
+        <a href="#fit">Role fit</a>
+      </div>
+    </nav>
+  </header>
+
+  <main>
+    <section class="hero wrap" id="overview" style="border-top:0">
+      <div class="hero-grid">
+        <div class="reveal">
+          <div class="eyebrow">Infrastructure migration case study</div>
+          <h1>Reducing startup infrastructure cost without compromising production reliability.</h1>
+          <p class="lead">At Rewards Bunny, I planned and executed a migration away from an expensive managed-cloud setup toward Hetzner, CapRover, and a local database architecture — cutting infrastructure cost by approximately 20x while keeping continuity, backups, DNS/SSL, Docker deployments, and database integrity in view.</p>
+          <div class="actions">
+            <a class="button primary" href="../">Back to portfolio</a>
+            <a class="button" href="mailto:gohkimnam@gmail.com">Contact Jacky</a>
+          </div>
+        </div>
+        <aside class="metric-card reveal d1" aria-label="Infrastructure migration proof points">
+          <h2>Result</h2>
+          <div class="metrics">
+            <div class="metric"><strong>US$1,581.83</strong><span>peak monthly cloud charge</span></div>
+            <div class="metric"><strong>~20x</strong><span>infrastructure cost reduction</span></div>
+            <div class="metric"><strong>GCP →</strong><span>Hetzner + CapRover</span></div>
+            <div class="metric"><strong>Local DB</strong><span>instead of managed DB setup</span></div>
+          </div>
+          <p class="note">Public version. Billing evidence and operational screenshots should remain selectively shared/redacted.</p>
+        </aside>
+      </div>
+    </section>
+
+    <section class="wrap">
+      <div class="section-head">
+        <h2 class="section-title">The problem</h2>
+        <p class="section-note">The cloud setup was becoming disproportionate for the company’s stage. The goal was not just “move servers”; it was to preserve a live product while changing the cost base.</p>
+      </div>
+      <div class="grid">
+        <article class="card span-4"><span class="label">Cost pressure</span><h3>Cloud spend had to match stage.</h3><p>A peak monthly charge of US$1,581.83 was too heavy for a lean rewards platform.</p></article>
+        <article class="card span-4"><span class="label">Production risk</span><h3>Reliability still mattered.</h3><p>Cashback, attribution, merchant data, and user trust meant migration mistakes could not be treated casually.</p></article>
+        <article class="card span-4"><span class="label">Founder tradeoff</span><h3>Business and technical judgment met.</h3><p>The decision required cost discipline, implementation fluency, and risk management rather than a purely technical preference.</p></article>
+      </div>
+    </section>
+
+    <section id="map" class="wrap">
+      <div class="section-head">
+        <h2 class="section-title">Migration shape</h2>
+        <p class="section-note">A simplified public view of the before/after architecture. Sensitive project names, IPs, database names, and credentials are intentionally excluded.</p>
+      </div>
+      <div class="migration-map" aria-label="Before and after migration architecture">
+        <div class="map-grid">
+          <div class="stack">
+            <span class="label">Before</span>
+            <h3>Managed cloud setup</h3>
+            <div class="pill-list">
+              <span class="pill">GCP</span><span class="pill">Managed DB</span><span class="pill">Higher fixed cost</span><span class="pill">More platform overhead</span>
+            </div>
+          </div>
+          <div class="arrow" aria-hidden="true">→</div>
+          <div class="stack after">
+            <span class="label">After</span>
+            <h3>Lean controlled infrastructure</h3>
+            <div class="pill-list">
+              <span class="pill">Hetzner</span><span class="pill">CapRover</span><span class="pill">Docker deployments</span><span class="pill">Local database architecture</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="risk" class="wrap">
+      <div class="section-head">
+        <h2 class="section-title">Risk controls</h2>
+        <p class="section-note">This is the part that matters for Technical Product and Founder’s Office roles: controlling the migration, not merely choosing cheaper hosting.</p>
+      </div>
+      <div class="risk-list">
+        <div class="risk"><strong>Data integrity</strong><span>Database migration, validation mindset, backup discipline, and rollback awareness.</span></div>
+        <div class="risk"><strong>Service continuity</strong><span>Docker deployments, application migration, DNS/SSL cutover, and production troubleshooting.</span></div>
+        <div class="risk"><strong>Cost ownership</strong><span>Translated a technical infrastructure decision into a business outcome: approximately 20x cost reduction.</span></div>
+        <div class="risk"><strong>Operational judgment</strong><span>Balanced immediate savings against maintainability, reliability, support load, and startup constraints.</span></div>
+      </div>
+    </section>
+
+    <section class="wrap">
+      <div class="quote">
+        <p>“The outcome was cost reduction; the actual work was risk-managed execution.”</p>
+        <span>Why this story matters for technical product, strategic projects, operations, and AI-enabled systems roles.</span>
+      </div>
+    </section>
+
+    <section id="fit" class="wrap">
+      <div class="section-head">
+        <h2 class="section-title">Hiring signal</h2>
+        <p class="section-note">What this case study should make a hiring manager believe.</p>
+      </div>
+      <div class="grid">
+        <article class="card span-3"><span class="label">Technical Product</span><h3>Can reason about systems tradeoffs.</h3><p>APIs, databases, deployments, DNS/SSL, cloud cost, reliability, and production constraints.</p></article>
+        <article class="card span-3"><span class="label">Founder’s Office</span><h3>Can own ambiguous cost/risk projects.</h3><p>Frames the business problem, chooses a practical path, and drives execution.</p></article>
+        <article class="card span-3"><span class="label">Strategy Ops</span><h3>Can turn cost pressure into operating leverage.</h3><p>Not just analysis — implementation, coordination, and verification.</p></article>
+        <article class="card span-3"><span class="label">AI Systems</span><h3>Understands the operating layer behind products.</h3><p>Useful for roles connecting automation, workflows, infrastructure, and business outcomes.</p></article>
+      </div>
+    </section>
+
+    <section class="wrap">
+      <div class="section-head">
+        <h2 class="section-title">Next evidence to add</h2>
+        <p class="section-note">For private interview follow-up: redacted GCP billing screenshot, current infrastructure cost evidence, before/after architecture diagram, migration checklist, and selected validation notes.</p>
+      </div>
+      <div class="actions">
+        <a class="button primary" href="mailto:gohkimnam@gmail.com">Discuss relevant roles</a>
+        <a class="button" href="../rewards-bunny/">View Rewards Bunny case study</a>
+        <a class="button" href="../">Return home</a>
+      </div>
+    </section>
+  </main>
+
+  <footer class="wrap">© 2026 Jacky Goh · Infrastructure migration case study · Sensitive details intentionally omitted</footer>
+</body>
+</html>
