@@ -172,6 +172,7 @@
     .span-4 { grid-column: span 4; }
     .span-5 { grid-column: span 5; }
     .span-7 { grid-column: span 7; }
+    .span-12 { grid-column: span 12; }
     .card h3 { margin: 12px 0 10px; font-size: 21px; line-height: 1.22; letter-spacing: -.02em; }
     .card p { margin: 0; color: var(--muted); font-size: 15px; }
     .card ul { margin: 18px 0 0; padding: 0; list-style: none; display: grid; gap: 8px; color: #464039; font-size: 14px; }
@@ -222,7 +223,7 @@
       .hero-grid, .section-head, .contact-card { grid-template-columns: 1fr; }
       .summary-card { position: static; }
       .grid { grid-template-columns: 1fr; }
-      .span-4, .span-5, .span-7 { grid-column: auto; }
+      .span-4, .span-5, .span-7, .span-12 { grid-column: auto; }
       .proof-strip { grid-template-columns: repeat(2, 1fr); }
     }
     @media (max-width: 640px) {
@@ -300,17 +301,23 @@
           <p style="margin-top:18px"><a href="rewards-bunny/">Read case study →</a></p>
         </article>
         <article class="card span-5">
+          <span class="work-label">Applied AI Systems</span>
+          <h3>Built AI agents with approval gates and measured checks.</h3>
+          <p>Multi-agent orchestrator with routing, human approval and a review gate that caught 12 of 12 planted defects. Plus an outbound voice agent for Singapore English and Mandarin.</p>
+          <p style="margin-top:18px"><a href="applied-ai-systems/">Read case study →</a></p>
+        </article>
+        <article class="card span-5">
           <span class="work-label">Infrastructure</span>
           <h3>Reduced infra costs by approximately 20x.</h3>
           <p>Peak cloud charge: US$1,581.83/month. Migrated toward Hetzner, CapRover, and local DB architecture.</p>
           <p style="margin-top:18px"><a href="infrastructure-migration/">Read case study →</a></p>
         </article>
-        <article class="card span-5">
+        <article class="card span-7">
           <span class="work-label">VibeLaunch</span>
           <h3>Open-source launch standard for AI-assisted builders.</h3>
           <p><a href="https://github.com/JackyGohSG/vibelaunch-framework">GitHub repo</a> · <a href="https://jackygohsg.github.io/vibelaunch-framework/">Live docs</a></p>
         </article>
-        <article class="card span-7">
+        <article class="card span-12">
           <span class="work-label">Applied ML</span>
           <h3>Hotel No-Show Prediction.</h3>
           <p>119,390 usable rows. Random Forest ROC AUC ~0.796. <a href="https://github.com/JackyGohSG/aiap-hotel-noshow-25052026">View repo</a>.</p>

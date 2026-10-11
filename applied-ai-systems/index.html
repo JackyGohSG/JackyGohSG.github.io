@@ -1,0 +1,253 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Applied AI Systems Case Study | Jacky Goh</title>
+  <meta name="description" content="Two applied AI builds: a multi-agent orchestrator with routing, human approval and a tested review gate, and an outbound voice agent tuned for Singapore English and Mandarin." />
+  <meta property="og:title" content="Applied AI Systems Case Study | Jacky Goh" />
+  <meta property="og:description" content="Multi-agent orchestration with fail-closed approvals, and a real-phone voice agent proof of concept." />
+  <meta property="og:image" content="https://jackygohsg.github.io/assets/jacky-goh-headshot-ai-original-candidate-2.jpg" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700;800&family=Newsreader:opsz,wght@6..72,500..700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #f7f4ee; --paper: #fffdf8; --ink: #191715; --muted: #68625a;
+      --line: #ded6cb; --line-soft: #ebe4da; --green: #1f5a4f; --clay: #9a5c34;
+      --blue: #264f82; --green-bg: #e8f0e7; --max: 1280px; --ease: cubic-bezier(.16,1,.3,1);
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; background: var(--bg); }
+    body {
+      margin: 0; color: var(--ink);
+      background:
+        radial-gradient(circle at 92% 8%, rgba(31,90,79,.08), transparent 34rem),
+        radial-gradient(circle at 7% 22%, rgba(154,92,52,.08), transparent 28rem),
+        var(--bg);
+      font-family: "Geist", ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+      line-height: 1.6;
+    }
+    a { color: inherit; text-underline-offset: 3px; }
+    .wrap { width: min(var(--max), calc(100% - clamp(32px, 7vw, 96px))); margin: 0 auto; }
+    header { padding: 24px 0 10px; }
+    .nav { display: flex; justify-content: space-between; align-items: center; gap: 24px; padding-bottom: 22px; border-bottom: 1px solid var(--line); }
+    .brand { font-weight: 800; text-decoration: none; letter-spacing: -.02em; }
+    .nav-links { display: flex; gap: 18px; flex-wrap: wrap; justify-content: flex-end; }
+    .nav-links a { text-decoration: none; color: var(--muted); font-size: 14px; font-weight: 650; }
+    .nav-links a:hover { color: var(--ink); }
+
+    .hero { padding: clamp(54px, 7vh, 86px) 0 clamp(62px, 8vh, 92px); }
+    .hero-grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(360px, 440px); gap: clamp(48px, 6vw, 86px); align-items: start; }
+    .eyebrow { display: inline-flex; align-items: center; gap: 8px; margin-bottom: 18px; color: var(--clay); font-size: 12px; font-weight: 800; letter-spacing: .12em; text-transform: uppercase; }
+    .eyebrow::before { content: ""; width: 8px; height: 8px; border-radius: 999px; background: var(--green); }
+    h1 { font-family: "Newsreader", ui-serif, Georgia, serif; font-size: clamp(42px, 4.8vw, 72px); line-height: 1.08; letter-spacing: -.01em; font-weight: 650; max-width: 820px; margin: 0 0 22px; text-wrap: balance; }
+    .lead { max-width: 780px; margin: 0; color: #38332d; font-size: clamp(18px, 1.45vw, 22px); line-height: 1.48; letter-spacing: -.01em; }
+    .actions { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 30px; }
+    .button { display: inline-flex; align-items: center; justify-content: center; min-height: 44px; padding: 0 15px; border-radius: 8px; border: 1px solid var(--line); background: var(--paper); text-decoration: none; font-weight: 750; font-size: 14px; transition: transform 220ms var(--ease), border-color 220ms var(--ease); }
+    .button.primary { background: var(--ink); color: #fffdf8; border-color: var(--ink); }
+    .button:hover { transform: translateY(-1px); border-color: #c7bbae; }
+
+    .metric-card { background: var(--paper); border: 1px solid var(--line); border-radius: 18px; padding: clamp(22px, 2vw, 30px); box-shadow: 0 14px 42px rgba(35,28,20,.055); margin-top: 26px; }
+    .metric-card h2 { margin: 0 0 16px; color: var(--muted); font-size: 14px; letter-spacing: .09em; text-transform: uppercase; }
+    .metrics { display: grid; gap: 1px; background: var(--line-soft); border: 1px solid var(--line-soft); border-radius: 14px; overflow: hidden; }
+    .metric { background: #fffefa; padding: 18px; display: grid; gap: 8px; }
+    .metric strong { color: var(--green); font-size: clamp(30px, 3.2vw, 46px); line-height: 1; letter-spacing: -.01em; }
+    .metric span { color: var(--muted); font-size: 13px; font-weight: 700; max-width: 300px; }
+    .note { margin: 16px 0 0; color: var(--muted); font-size: 13px; }
+
+    section { padding: 74px 0; border-top: 1px solid var(--line); }
+    .section-head { display: grid; grid-template-columns: 300px 1fr; gap: 48px; margin-bottom: 28px; }
+    h2.section-title { font-family: "Newsreader", ui-serif, Georgia, serif; font-size: clamp(34px, 4vw, 56px); line-height: 1.06; letter-spacing: -.015em; margin: 0; font-weight: 650; }
+    .section-note { margin: 0; color: var(--muted); max-width: 700px; font-size: 16px; }
+    .grid { display: grid; grid-template-columns: repeat(12, 1fr); gap: 14px; }
+    .card { background: var(--paper); border: 1px solid var(--line); border-radius: 16px; padding: 24px; min-height: 170px; }
+    .span-3 { grid-column: span 3; } .span-4 { grid-column: span 4; } .span-6 { grid-column: span 6; }
+    .label { color: var(--clay); font-size: 12px; font-weight: 800; text-transform: uppercase; letter-spacing: .1em; }
+    .card h3 { margin: 12px 0 10px; font-size: 22px; line-height: 1.2; letter-spacing: -.02em; }
+    .card p { margin: 0; color: var(--muted); font-size: 15px; }
+
+    .flow { background: var(--paper); border: 1px solid var(--line); border-radius: 18px; padding: 26px; }
+    .flow-row { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; }
+    .step { background: #fffefa; border: 1px solid var(--line-soft); border-radius: 12px; padding: 12px 14px; font-weight: 700; font-size: 14px; }
+    .step small { display: block; color: var(--muted); font-weight: 600; font-size: 12px; }
+    .step.gate { background: var(--green-bg); }
+    .flow-arrow { color: var(--green); font-weight: 800; }
+
+    .risk-list { display: grid; gap: 1px; border: 1px solid var(--line-soft); background: var(--line-soft); border-radius: 16px; overflow: hidden; }
+    .risk { display: grid; grid-template-columns: 260px 1fr; gap: 18px; background: var(--paper); padding: 18px; }
+    .risk strong { color: var(--green); }
+    .risk span { color: var(--muted); }
+
+    table { width: 100%; border-collapse: collapse; background: var(--paper); border: 1px solid var(--line); border-radius: 16px; overflow: hidden; font-size: 15px; }
+    th, td { text-align: left; padding: 14px 18px; border-bottom: 1px solid var(--line-soft); }
+    th { color: var(--muted); font-size: 12px; text-transform: uppercase; letter-spacing: .08em; }
+    td strong { color: var(--green); }
+
+    .quote { background: #171512; color: #fffdf8; border-radius: 18px; padding: clamp(28px, 4vw, 46px); }
+    .quote p { font-family: "Newsreader", ui-serif, Georgia, serif; font-size: clamp(30px, 4vw, 56px); line-height: 1.08; letter-spacing: -.015em; margin: 0; max-width: 980px; }
+
+    footer { padding: 34px 0 58px; color: var(--muted); font-size: 13px; }
+    .reveal { animation: fadeUp 650ms var(--ease) both; }
+    .d1 { animation-delay: 90ms; }
+    @keyframes fadeUp { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
+    @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } .reveal, .button { animation: none; transition: none; } }
+    @media (max-width: 980px) {
+      .hero-grid, .section-head { grid-template-columns: 1fr; }
+      .grid { grid-template-columns: 1fr; }
+      .span-3, .span-4, .span-6 { grid-column: auto; }
+      .risk { grid-template-columns: 1fr; gap: 4px; }
+    }
+    @media (max-width: 640px) {
+      .wrap { width: min(var(--max), calc(100% - 28px)); }
+      .nav { align-items: flex-start; flex-direction: column; }
+      .hero { padding: 42px 0 58px; }
+      h1 { font-size: clamp(36px, 10.5vw, 52px); line-height: 1.1; }
+      th, td { padding: 10px 12px; font-size: 14px; }
+    }
+  </style>
+</head>
+<body>
+  <header class="wrap">
+    <nav class="nav" aria-label="Main navigation">
+      <a class="brand" href="../">Jacky Goh</a>
+      <div class="nav-links">
+        <a href="#overview">Overview</a>
+        <a href="#orchestrator">Orchestrator</a>
+        <a href="#voice">Voice agent</a>
+        <a href="#fit">What this demonstrates</a>
+      </div>
+    </nav>
+  </header>
+
+  <main>
+    <section class="hero wrap" id="overview" style="border-top:0">
+      <div class="hero-grid">
+        <div class="reveal">
+          <div class="eyebrow">Applied AI systems case study</div>
+          <h1>Building AI agents that know when to stop.</h1>
+          <p class="lead">Two hands-on builds from 2026. A multi-agent orchestrator that routes each request to the right agent, pauses for human approval before risky actions and checks the output before it is returned. And an outbound voice agent that holds a real phone conversation in Singapore English and Mandarin.</p>
+          <div class="actions">
+            <a class="button primary" href="#orchestrator">See the orchestrator</a>
+            <a class="button" href="#voice">See the voice agent</a>
+          </div>
+        </div>
+        <aside class="metric-card reveal d1" aria-label="Applied AI proof points">
+          <h2>Evidence</h2>
+          <div class="metrics">
+            <div class="metric"><strong>12 / 12</strong><span>planted bad outputs caught by the review gate, with 0 of 12 good outputs wrongly flagged</span></div>
+            <div class="metric"><strong>7 of 13</strong><span>pilot runs stopped by design when a capability or human approval was missing</span></div>
+            <div class="metric"><strong>450</strong><span>automated tests passing across the two builds (261 and 189)</span></div>
+            <div class="metric"><strong>3%</strong><span>transcription error for the best speech model on Singapore English, Singlish and Mandarin test clips</span></div>
+          </div>
+          <p class="note">Figures come from each project's own run log, test suite and evaluation scripts, re-run in October 2026.</p>
+        </aside>
+      </div>
+    </section>
+
+    <section id="orchestrator" class="wrap">
+      <div class="section-head">
+        <h2 class="section-title">Multi-agent orchestrator</h2>
+        <p class="section-note">A local service that takes a request, decides what kind of work it is, and hands it to the right worker: a direct model call, a coding agent, or a general tool-using agent. The design principle is that the model is not the permission system. Rules in code decide what may run.</p>
+      </div>
+      <div class="flow" aria-label="Orchestrator request flow">
+        <div class="flow-row">
+          <div class="step">Request<small>any chat front end or API</small></div>
+          <span class="flow-arrow" aria-hidden="true">→</span>
+          <div class="step">Router<small>intent, risk, required capabilities</small></div>
+          <span class="flow-arrow" aria-hidden="true">→</span>
+          <div class="step gate">Approval gate<small>human sign-off for write or risky actions</small></div>
+          <span class="flow-arrow" aria-hidden="true">→</span>
+          <div class="step">Worker agent<small>model, coding agent or tool agent</small></div>
+          <span class="flow-arrow" aria-hidden="true">→</span>
+          <div class="step gate">Review gate<small>rejects empty, placeholder, cut-off or refusal output</small></div>
+          <span class="flow-arrow" aria-hidden="true">→</span>
+          <div class="step">Answer + run log</div>
+        </div>
+      </div>
+      <div class="grid" style="margin-top:14px">
+        <article class="card span-4"><span class="label">Routing</span><h3>Picks requirements, not vendors.</h3><p>The router outputs what the task needs (repository access, tests, terminal, risk level) and a resolver maps that to an available worker. Swapping a model or agent does not change the routing logic.</p></article>
+        <article class="card span-4"><span class="label">Fail closed</span><h3>Missing capability means stop.</h3><p>If no worker has the required capability, or approval has not been given, the run is blocked and logged rather than attempted with a weaker tool. Policy comes from server configuration, and a request cannot switch its own safeguards off.</p></article>
+        <article class="card span-4"><span class="label">Human in the loop</span><h3>Approval before risky actions.</h3><p>Write, destructive, sensitive or financial requests stop for a human decision. A permission check runs before any local agent process starts.</p></article>
+      </div>
+    </section>
+
+    <section class="wrap">
+      <div class="section-head">
+        <h2 class="section-title">Measuring the review gate</h2>
+        <p class="section-note">A gate is only useful if it catches bad output without blocking good output, so I built a labelled set of 30 test cases and scored the gate against it. Each case states what should happen and why.</p>
+      </div>
+      <table>
+        <thead><tr><th>Measure</th><th>New gate</th><th>Rules it replaced</th></tr></thead>
+        <tbody>
+          <tr><td>Planted defects caught (empty, placeholder, truncated, refusal)</td><td><strong>12 of 12</strong></td><td>3 of 12</td></tr>
+          <tr><td>Good outputs wrongly flagged</td><td><strong>0 of 12</strong></td><td>0 of 12</td></tr>
+          <tr><td>Defects caught for the wrong reason</td><td><strong>0</strong></td><td>n/a</td></tr>
+        </tbody>
+      </table>
+      <div class="risk-list" style="margin-top:14px">
+        <div class="risk"><strong>Pilot runs</strong><span>13 recorded runs: 5 completed, 7 blocked by design, 1 failed. 3 approvals granted by a human before execution, 2 left pending.</span></div>
+        <div class="risk"><strong>What the test covers</strong><span>The rule-based review gate. It checks that output is complete and usable, not whether the model's answer is correct.</span></div>
+        <div class="risk"><strong>What it does not cover yet</strong><span>Answer quality from the model-backed reviewer, and off-topic or unsupported claims. Six cases in the set are kept as known limits that a text filter cannot settle.</span></div>
+      </div>
+    </section>
+
+    <section id="voice" class="wrap">
+      <div class="section-head">
+        <h2 class="section-title">Outbound voice agent</h2>
+        <p class="section-note">A proof of concept for an AI agent that places a real phone call and holds a natural conversation. Built over a week in October 2026 on a voice platform, with the conversation design, provider choices and call handling done in my own code.</p>
+      </div>
+      <div class="grid">
+        <article class="card span-4"><span class="label">Transparency</span><h3>Always says it is an AI.</h3><p>The agent states it is an AI at the start of the call, never denies it when asked, and gives a recording notice when the call is recorded.</p></article>
+        <article class="card span-4"><span class="label">Conversation</span><h3>Built to be interrupted.</h3><p>Callers can cut in mid-sentence and the agent stops and answers. Tuning fixed repeated greetings, over-long replies and awkward hang-ups, which are the details that make a call feel human or robotic.</p></article>
+        <article class="card span-4"><span class="label">Language</span><h3>Singapore English and Mandarin.</h3><p>The agent understands mixed English and Chinese and can reply in Mandarin with the same voice. Voice, listening model and AI model are each swappable through configuration.</p></article>
+      </div>
+    </section>
+
+    <section class="wrap">
+      <div class="section-head">
+        <h2 class="section-title">Choosing the speech model with data</h2>
+        <p class="section-note">An agent cannot answer well if it mishears the caller. Rather than default to the platform's standard speech model, I built a small benchmark of 15 recorded clips across Singapore English, Singlish, Mandarin and mixed speech, and scored each provider.</p>
+      </div>
+      <table>
+        <thead><tr><th>Provider</th><th>Overall error</th><th>Singlish</th><th>Key terms caught</th></tr></thead>
+        <tbody>
+          <tr><td>MERaLiON-3 (A*STAR)</td><td><strong>3%</strong></td><td>9%</td><td>96%</td></tr>
+          <tr><td>ElevenLabs Scribe v2</td><td>6%</td><td>9%</td><td>96%</td></tr>
+          <tr><td>Gladia Solaria</td><td>14%</td><td>35%</td><td>72%</td></tr>
+        </tbody>
+      </table>
+      <p class="note">15 clips gives a direction, not a verdict. These are file transcription results; live-call behaviour was checked separately on real test calls.</p>
+    </section>
+
+    <section class="wrap">
+      <div class="quote">
+        <p>“Getting an agent to act is easy. The real work is deciding when it should not.”</p>
+      </div>
+    </section>
+
+    <section id="fit" class="wrap">
+      <div class="section-head">
+        <h2 class="section-title">What this demonstrates</h2>
+        <p class="section-note">Capabilities shown through design decisions, tests and measured results across both builds.</p>
+      </div>
+      <div class="grid">
+        <article class="card span-3"><span class="label">AI Product</span><h3>Designs for trust, not just capability.</h3><p>Approval gates, AI disclosure and honest limits are product decisions, made up front.</p></article>
+        <article class="card span-3"><span class="label">Technical Product</span><h3>Measures before claiming.</h3><p>Labelled test sets and provider benchmarks drive decisions, with the limits of each test stated.</p></article>
+        <article class="card span-3"><span class="label">AI Solutions</span><h3>Integrates agents, models and APIs.</h3><p>Routing, tool calling, coding agents, speech, voice and telephony providers combined into working systems.</p></article>
+        <article class="card span-3"><span class="label">Delivery</span><h3>Ships working builds quickly.</h3><p>Hundreds of automated tests and real-phone testing, with each change verified before it is relied on.</p></article>
+      </div>
+    </section>
+
+    <section class="wrap">
+      <div class="actions">
+        <a class="button primary" href="mailto:gohkimnam@gmail.com">Discuss relevant roles</a>
+        <a class="button" href="../rewards-bunny/">View Rewards Bunny case study</a>
+        <a class="button" href="../">Return home</a>
+      </div>
+    </section>
+  </main>
+
+  <footer class="wrap">© 2026 Jacky Goh · Applied AI systems case study</footer>
+</body>
+</html>
